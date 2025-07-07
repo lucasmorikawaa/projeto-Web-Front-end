@@ -1,0 +1,38 @@
+<div class="container mt-4">
+    <h2 class="text-center text-warning mb-4 fw-bold">
+      <i class="bi bi-star-fill me-2"></i> Pessoas Favoritadas
+    </h2>
+  
+    <div *ngIf="favoritos.length > 0; else semFavoritos">
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover shadow-sm">
+          <thead class="table-dark text-center">
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Nome</th>
+              <th scope="col">E-mail</th>
+              <th scope="col">Telefone</th>
+              <th scope="col">Cidade</th>
+              <th scope="col">Estado</th>
+              <th scope="col">CEP</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let pessoa of favoritos">
+              <td>{{ pessoa.id }}</td>
+              <td>{{ pessoa.name }}</td>
+              <td>{{ pessoa.email }}</td>
+              <td>{{ pessoa.telefone }}</td>
+              <td>{{ pessoa.cidade }}</td>
+              <td>{{ pessoa.estado?.name }}</td>
+              <td>{{ pessoa.cep }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  
+    <ng-template #semFavoritos>
+      <p class="text-center text-muted fs-5">Nenhuma pessoa foi favoritada ainda.</p>
+    </ng-template>
+  </div>

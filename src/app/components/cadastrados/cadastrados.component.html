@@ -1,0 +1,136 @@
+<h2 class="text-center my-4 fw-bold text-primary">Pessoas Cadastradas</h2>
+
+<!-- Barra de pesquisa -->
+<div class="row justify-content-center mb-4">
+  <div class="col-md-8">
+    <div class="input-group shadow-sm">
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="searchTerm"
+        (input)="filtrarTabela()"
+        placeholder="Buscar..."
+        aria-label="Buscar"
+      />
+      <select
+        class="form-select"
+        [(ngModel)]="filtroSelecionado"
+        (change)="filtrarTabela()"
+        style="max-width: 180px"
+        aria-label="Filtro de busca"
+      >
+        <option value="nome">Nome</option>
+        <option value="email">E-mail</option>
+        <option value="cidade">Cidade</option>
+        <option value="cpf">CPF</option>
+        <option value="telefone">Telefone</option>
+        <option value="endereco">Endereço</option>
+        <option value="estado">Estado</option>
+        <option value="cep">CEP</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- Tabela para telas médias e grandes -->
+<div class="table-responsive d-none d-md-block">
+  <table class="table table-hover table-bordered shadow-sm">
+    <thead class="table-dark text-center align-middle">
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>E-mail</th>
+        <th>Telefone</th>
+        <th>Nascimento</th>
+        <th>CPF</th>
+        <th>Endereço</th>
+        <th>Cidade</th>
+        <th>Estado</th>
+        <th>CEP</th>
+        <th>Opções</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let lista of cadastradosFiltrados">
+        <td>{{ lista.id }}</td>
+        <td>{{ lista.name }}</td>
+        <td>{{ lista.email }}</td>
+        <td>{{ lista.telefone }}</td>
+        <td>{{ lista.datanascimento }}</td>
+        <td>{{ lista.cpf }}</td>
+        <td>{{ lista.endereco }}</td>
+        <td>{{ lista.cidade }}</td>
+        <td>{{ lista.estado?.name }}</td>
+        <td>{{ lista.cep }}</td>
+        <td class="text-center">
+          <button class="btn p-1 me-2" (click)="edit(lista)" title="Editar" style="background: none; border: none;">
+            <i class="bi bi-pencil-square fs-5 text-dark"></i>
+          </button>
+          <button class="btn p-1 me-2" (click)="delete(confirmModal, lista)" title="Remover" style="background: none; border: none;">
+            <i class="bi bi-trash fs-5 text-dark"></i>
+          </button>
+          <button class="btn p-1" (click)="favoritar(lista)" title="Favoritar" style="background: none; border: none;">
+            <i class="bi" [ngClass]="{
+              'bi-star-fill text-warning': lista.favorito,
+              'bi-star text-dark': !lista.favorito
+            }" style="font-size: 1.3rem;"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Cards para mobile -->
+<div class="d-block d-md-none">
+  <div *ngFor="let lista of cadastradosFiltrados" class="card mb-3 shadow-sm">
+    <div class="card-body">
+      <h5 class="card-title fw-bold text-primary">{{ lista.name }}</h5>
+      <p class="card-text mb-1"><strong>E-mail:</strong> {{ lista.email }}</p>
+      <p class="card-text mb-1"><strong>Telefone:</strong> {{ lista.telefone }}</p>
+      <p class="card-text mb-1"><strong>Nascimento:</strong> {{ lista.datanascimento }}</p>
+      <p class="card-text mb-1"><strong>CPF:</strong> {{ lista.cpf }}</p>
+      <p class="card-text mb-1"><strong>Endereço:</strong> {{ lista.endereco }}</p>
+      <p class="card-text mb-1"><strong>Cidade:</strong> {{ lista.cidade }}</p>
+      <p class="card-text mb-1"><strong>Estado:</strong> {{ lista.estado?.name }}</p>
+      <p class="card-text mb-3"><strong>CEP:</strong> {{ lista.cep }}</p>
+      <div class="d-flex justify-content-end gap-2">
+        <button class="btn btn-sm btn-outline-primary" (click)="edit(lista)">
+          <i class="bi bi-pencil-square"></i>
+        </button>
+        <button class="btn btn-sm btn-outline-danger" (click)="delete(confirmModal, lista)">
+          <i class="bi bi-trash"></i>
+        </button>
+        <button class="btn btn-sm btn-outline-warning" (click)="favoritar(lista)">
+          <i class="bi" [ngClass]="{
+            'bi-star-fill text-warning': lista.favorito,
+            'bi-star': !lista.favorito
+          }"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <ng-template #confirmModal let-modal>
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i> Remover Pessoa
+        </h5>
+        <button type="button" class="btn-close btn-close-white" aria-label="Fechar" (click)="modal.close()"></button>
+      </div>
+
+      <div class="modal-body">
+        <p class="fs-5 mb-0">Tem certeza que deseja remover?</p>
+        <small class="text-muted">Essa ação não poderá ser desfeita.</small>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="modal.close(false)">
+          <i class="bi bi-x-circle me-1"></i> Cancelar
+        </button>
+        <button type="button" class="btn btn-danger" (click)="modal.close(true)">
+          <i class="bi bi-trash-fill me-1"></i> Remover
+        </button>
+      </div>
+    </ng-template>
