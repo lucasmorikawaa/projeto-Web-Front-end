@@ -8,34 +8,32 @@ import { Observable } from 'rxjs';
 })
 export class PessoasService {
 
-  constructor(private http: HttpClient) { }
+  private apiUrl = "https://projetolucasmorikawa.duckdns.org/cadastrados";
 
-  getPessoa() : Observable<Pessoa[]> {
-    return this.http.get<Pessoa[]>("http://localhost:8080/cadastrados");
+  constructor(private http: HttpClient) {}
+
+  getPessoa(): Observable<Pessoa[]> {
+    return this.http.get<Pessoa[]>(`${this.apiUrl}`);
   }
 
-
-  save(pessoa:Pessoa){;
-
-    return this.http.post<Pessoa>("http://localhost:8080/cadastrados", pessoa);
+  save(pessoa: Pessoa): Observable<Pessoa> {
+    return this.http.post<Pessoa>(`${this.apiUrl}`, pessoa);
   }
 
-  delete(pessoa:Pessoa){;
-
-    return this.http.delete<void>(`http://localhost:8080/cadastrados/${pessoa.id}`);
+  delete(pessoa: Pessoa): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${pessoa.id}`);
   }
 
-  update(id: number, pessoa: Pessoa) {
-    return this.http.put(`http://localhost:8080/cadastrados/${id}`, pessoa);
+  update(id: number, pessoa: Pessoa): Observable<Pessoa> {
+    return this.http.put<Pessoa>(`${this.apiUrl}/${id}`, pessoa);
   }
 
   getFavoritos(): Observable<Pessoa[]> {
-    return this.http.get<Pessoa[]>("http://localhost:8080/cadastrados/favoritos");
-  }
-  
-  updatePessoa(id: number, pessoa: Pessoa) {
-    return this.http.put(`http://localhost:8080/cadastrados/${id}`, pessoa);
+    return this.http.get<Pessoa[]>(`${this.apiUrl}/favoritos`);
   }
 
-  
+  updatePessoa(id: number, pessoa: Pessoa): Observable<Pessoa> {
+    return this.http.put<Pessoa>(`${this.apiUrl}/${id}`, pessoa);
+  }
+
 }

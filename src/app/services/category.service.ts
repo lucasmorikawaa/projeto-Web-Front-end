@@ -8,12 +8,12 @@ import { Observable } from 'rxjs';
 })
 export class CategoryService {
 
+  private apiUrl = "https://projetolucasmorikawa.duckdns.org/categories";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getCategories() : Observable<Category[]> {
-    return this.http.get<Category[]>("http://localhost:8080/categories");
+  getCategories(): Observable<Category[]> {
+    return this.http.get<Category[]>(this.apiUrl);
   }
-
 
 }
