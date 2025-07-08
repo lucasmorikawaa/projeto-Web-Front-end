@@ -49,18 +49,18 @@ export class CadastrarComponent implements OnInit{
 
   savePessoa() {
     if (this.cadastrado.id) {
-      // Modo edição
+      
       this.pessoasService.update(this.cadastrado.id, this.cadastrado).subscribe({
         next: () => {
-          this.saveEmitter.emit(); // Notifica o pai para atualizar a lista
+          this.saveEmitter.emit(); 
           this.cadastrado = {} as Pessoa;
         }
       });
     } else {
-      // Modo novo cadastro
+      
       this.pessoasService.save(this.cadastrado).subscribe({
         next: (data) => {
-          this.saveEmitter.emit(); // Notifica o pai para atualizar a lista
+          this.saveEmitter.emit(); 
           this.cadastrado = {} as Pessoa;
         }
       });
