@@ -82,7 +82,7 @@ export class CadastradosComponent implements OnInit {
 
 
   edit(pessoa: Pessoa) {
-    this.cadastrado = { ...pessoa }; // Cópia para evitar editar direto na tabela
+    this.cadastrado = { ...pessoa }; 
     this.showForm = true;
   }
 
