@@ -120,4 +120,9 @@ export class CadastradosComponent implements OnInit {
     });
   }
 
+  onSave() {
+    this.showForm = false;
+    this.loadData(); 
+  }
+
 }
